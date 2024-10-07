@@ -1,0 +1,45 @@
+* {
+box-sizing: border-box;
+padding: 0;
+}
+
+body, html {
+margin: 0;
+padding: 0;
+height:93vh;
+width: 100%;
+font-family: Arial, sans-serif;
+}
+    .header{
+
+    height:80px;
+    width:100%;
+    background-color:black;
+
+
+    }
+    .header a{
+    float:right;
+    margin-top:25px;
+    margin-right:5px;
+    text-decoration:none;
+     color:white;
+     font-size:20px;
+
+    }
+
+    .content{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    }
+    .button{
+    border:1px solid white;
+
+
+    }
+    .button:hover{
+    color:red;
+    background-color:white;
+
+    }
