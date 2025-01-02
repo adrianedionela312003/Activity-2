@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="vendor-container">
+    <h1>Vendors</h1>
+    <div class="vendor-add">
+           <a href="{% url 'vendor_create' %}">Add Vendor</a>
+    </div>
+
+    {% for vendor in vendors %}
+        <div class="vendor-box">
+
+            <a href="{% url 'vendor_detail' vendor.pk %}"><h2>{{ vendor.name }}</h2></a>
+            <!-- Check if the vendor has an image before displaying it -->
+            {% if vendor.image %}
+                <a href="{% url 'vendor_detail' vendor.pk %}"><img  src="{{ vendor.image.url }}" alt="{{ vendor.name }}" class="vendor-image" > </a>
+            {% else %}
+                <!-- Display a placeholder image if no image is available -->
+                <img src="{% static 'images/placeholder.png' %}" alt="No image available" class="vendor-image">
+            {% endif %}
+
+
+        </div>
+    {% endfor %}
+    <a href="{% url 'home' %}">Back to Home</a>
+</div>
+
+
+
+{% endblock content %}

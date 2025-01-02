@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pastry-creation-container">
+    <div class="pastry-create">
+        {% if user.vendor %}
+        <p>You already have a vendor profile.</p>
+        <a href="{% url 'vendor_detail' user.vendor.pk %}" class="btn btn-primary">View Your Profile</a>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Create Vendor Profile</button>
+        </form>
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}

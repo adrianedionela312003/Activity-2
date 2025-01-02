@@ -1,6 +1,5 @@
-{% load static%}
-
 <!DOCTYPE html>
+{% load static%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,23 +15,22 @@
 
 
 <div class="header">
-
-  <a href="{% url 'contact' %}" onclick="return confirm('Are you sure you want to go to the contact page?');" class="button">CONTACT</a>
-<a href="{% url 'about' %}" onclick="return confirm('Are you sure you want to go to the about page?');" class="button">ABOUT</a>
-<a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to go to the home page?');"class="button">HOME</a>
-
-
-
+<a href="{% url 'home' %}" class="button">HOME</a>
+<a href="{% url 'vendor' %}" class="button">VENDORS</a>
+<a href="{% url 'about' %}"  class="button">ABOUT</a>
+<a href="{% url 'contact' %}" class="button">CONTACT</a>
 </div>
+
 <div class="content">
     {% block content %}
+
+
 
     {% endblock content %}
 </div>
 
 
 
-<script src="path/to/your/script.js"></script>
 
 
 </body>
