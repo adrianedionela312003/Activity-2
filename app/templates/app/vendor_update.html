@@ -1,10 +1,10 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
-<div class="update-pastry">
-    <div class="update-pastry">
+<div class="update-vendor">
+    <div class="update-vendor">
         <form action="{% url 'vendor_update' vend.pk %}" method="post" enctype="multipart/form-data">
-            <h1>Update Pastry</h1>
+            <h1>Update Vendor</h1>
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update">
