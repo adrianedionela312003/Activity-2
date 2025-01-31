@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ vendor.name }}</h2>
+    <div class="card">
+        <img src="{{ vendor.image.url }}" class="card-img-top" alt="{{ vendor.name }}">
+        <div class="card-body">
+            <p><strong>Description:</strong> {{ vendor.description }}</p>
+            <p><strong>Location:</strong> {{ vendor.location }}</p>
+            <p><strong>Contact:</strong> {{ vendor.contact_number }}</p>
+
+            {% if vendor.user == request.user %}
+                <a href="{% url 'vendor_update' vendor.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'vendor_delete' vendor.pk %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+
+            <a href="{% url 'vendor_list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

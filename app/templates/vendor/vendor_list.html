@@ -1,0 +1,32 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Vendors</h2>
+    {% if vendor.user == request.user %}
+    <a href="{% url 'vendor_create' %}" class="btn btn-primary mb-3">Add Vendor</a>
+    {% endif %}
+
+    <div class="row">
+        {% for vendor in vendors %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="{{ vendor.image.url }}" class="card-img-top" alt="{{ vendor.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vendor.name }}</h5>
+                        <p class="card-text">{{ vendor.description|truncatewords:15 }}</p>
+                        <a href="{% url 'vendor_detail' vendor.pk %}" class="btn btn-info">View</a>
+
+                        {% if vendor.user == request.user %}
+                            <a href="{% url 'vendor_update' vendor.pk %}" class="btn btn-warning">Edit</a>
+                            <a href="{% url 'vendor_delete' vendor.pk %}" class="btn btn-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No vendors available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

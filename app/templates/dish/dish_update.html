@@ -1,0 +1,39 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Dish</h2>
+    <form method="post" enctype="multipart/form-data" id="updateDishForm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            {{ form.name }}
+            <small class="text-danger d-none" id="nameError">Name is required</small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            {{ form.price }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            {{ form.image }}
+        </div>
+        <button type="submit" class="btn btn-success">Update Dish</button>
+        <a href="{% url 'dish_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    document.getElementById("updateDishForm").addEventListener("submit", function(event) {
+        let nameField = document.querySelector("[name='name']");
+        if (nameField.value.trim() === "") {
+            document.getElementById("nameError").classList.remove("d-none");
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock content %}

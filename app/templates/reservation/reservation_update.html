@@ -1,0 +1,62 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Update Reservation</h2>
+    <form action="{% url 'reservation_update' reservation.pk %}" method="post" id="reservationForm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label" for="id_user">User</label>
+            <select name="user" class="form-control" id="id_user">
+                {% for choice in form.user.field.choices %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == form.user.value %} selected {% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_dish">Dish</label>
+            <select name="dish" class="form-control" id="id_dish">
+                {% for choice in form.dish.field.choices %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == form.dish.value %} selected {% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_event">Event</label>
+            <select name="event" class="form-control" id="id_event">
+                {% for choice in form.event.field.choices %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == form.event.value %} selected {% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_quantity">Quantity</label>
+            <input type="number" name="quantity" class="form-control" id="id_quantity" value="{{ form.quantity.value|default:'' }}">
+            <small class="text-danger d-none" id="quantityError">Quantity is required</small>
+        </div>
+
+        <button type="submit" class="btn btn-success" id="createReservationButton">Create Reservation</button>
+        <a href="{% url 'reservation_list' %}" class="btn btn-secondary" id="cancelButton">Cancel</a>
+    </form>
+</div>
+
+<script>
+    document.getElementById("reservationForm").addEventListener("submit", function(event) {
+        let quantityField = document.getElementById("id_quantity");
+        if (quantityField.value.trim() === "") {
+            document.getElementById("quantityError").classList.remove("d-none");
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock content %}

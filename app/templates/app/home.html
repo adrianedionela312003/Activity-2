@@ -1,6 +1,47 @@
 {% extends 'app/base.html' %}
 {% load static %}
-{% block content %}
 
-<h1> this is home</h1>
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome to the Vendor Community</h1>
+    <p class="lead">Discover and make reservations with your favorite vendors, explore the dishes they offer, and enjoy the best experiences.</p>
+
+    <!-- Section: Featured Vendors -->
+    <div class="mt-4">
+        <h3>Featured Vendors</h3>
+        <div class="row">
+            {% for vendor in vendors %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        {% if vendor.image %}
+                            <img src="{{ vendor.image.url }}" class="card-img-top" alt="{{ vendor.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vendor.name }}</h5>
+                            <p class="card-text">{{ vendor.description|truncatewords:15 }}</p>
+                            <a href="{% url 'vendor_detail' vendor.pk %}" class="btn btn-info">View Vendor</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">No vendors available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Section: Add Reservation -->
+    <div class="mt-4">
+        <h3>Make a Reservation</h3>
+        <p>Reserve a spot at your chosen vendor.</p>
+
+    </div>
+
+    <!-- Section: Add Dish -->
+    <div class="mt-4">
+        <h3>Add New Dish</h3>
+        <p>Add a new dish to your vendor's menu and showcase your culinary creations.</p>
+
+    </div>
+
+</div>
 {% endblock content %}

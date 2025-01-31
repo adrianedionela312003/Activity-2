@@ -1,0 +1,34 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Dishes</h2>
+        {% if dish.vendor.user == request.user %}
+        <a href="{% url 'dish_create' %}" class="btn btn-primary mb-3">Add Dish</a>
+      {% endif %}
+
+    <div class="row">
+        {% for dish in dishes %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="{{ dish.image.url }}" class="card-img-top" alt="{{ dish.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ dish.name }}</h5>
+                        <p class="card-text">{{ dish.description|truncatewords:15 }}</p>
+                        <p><strong>Price:</strong> ₱{{ dish.price }}</p>
+                        <a href="{% url 'dish_detail' dish.pk %}" class="btn btn-info">View</a>
+
+                        {% if dish.vendor.user == request.user %}
+                            <a href="{% url 'dish_update' dish.pk %}" class="btn btn-warning">Edit</a>
+                            <a href="{% url 'dish_delete' dish.pk %}" class="btn btn-danger">Delete</a>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No dishes available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

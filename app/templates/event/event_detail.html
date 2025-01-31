@@ -1,0 +1,26 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ event.title }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+            <p><strong>Vendors:</strong>
+                {% for vendor in event.vendors.all %}
+                    {{ vendor.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            {% if event.created_by == request.user %}
+                <a href="{% url 'event_update' event.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+
+            <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

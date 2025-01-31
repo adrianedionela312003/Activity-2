@@ -1,37 +1,72 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dionela site</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Website for Vendors {% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-<style>
-
-</style>
-
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Vendors Website</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'vendor_list' %}">Vendors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dish_list' %}">Dishes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'event_list' %}">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'post_list' %}">Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reservation_list' %}">Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'review_list' %}">Reviews</a>
+                    </li>
+                    <!-- Logout form -->
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                               {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link" style="color: inherit;">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
 
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
 
-<div class="header">
-<a href="{% url 'home' %}" class="button">HOME</a>
-<a href="{% url 'vendor' %}" class="button">VENDORS</a>
-<a href="{% url 'about' %}"  class="button">ABOUT</a>
-<a href="{% url 'contact' %}" class="button">CONTACT</a>
-</div>
-
-<div class="content">
-    {% block content %}
-
-
-
-    {% endblock content %}
-</div>
-
-
-
-
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Reservations</h2>
+
+    {% if user.is_authenticated and user.role != 'vendor' %}
+        <a href="{% url 'reservation_create' %}" class="btn btn-primary mb-3">Create Reservation</a>
+    {% endif %}
+
+    <div class="row">
+        {% for reservation in reservations %}
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservation for {{ reservation.dish.name }}</h5>
+                        <p><strong>User:</strong> {{ reservation.user.username }}</p>
+                        <p><strong>Event:</strong> {{ reservation.event.title }}</p>
+                        <p><strong>Quantity:</strong> {{ reservation.quantity }}</p>
+                        <a href="{% url 'reservation_detail' reservation.pk %}" class="btn btn-info">View</a>
+
+                        {% if reservation.user == request.user %}
+                            <a href="{% url 'reservation_update' reservation.pk %}" class="btn btn-warning">Edit</a>
+                            <a href="{% url 'reservation_delete' reservation.pk %}" class="btn btn-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No reservations available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

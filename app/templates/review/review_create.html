@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create Review</h2>
+    <form action="{% url 'review_create' %}" method="post" id="createReviewForm">
+        {% csrf_token %}
+
+        <!-- Dish Field -->
+        <div class="mb-3">
+            <label class="form-label" for="id_dish">Dish</label>
+            <select name="dish" class="form-control" id="id_dish">
+                {% for choice in form.dish.field.choices %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == form.dish.value %} selected {% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Rating Field -->
+        <div class="mb-3">
+            <label class="form-label" for="id_rating">Rating</label>
+            <select name="rating" class="form-control" id="id_rating">
+                {% for choice in form.rating.field.choices %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == form.rating.value %} selected {% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Comment Field -->
+        <div class="mb-3">
+            <label class="form-label" for="id_comment">Comment</label>
+            <textarea name="comment" class="form-control" id="id_comment">{{ form.comment.value|default:'' }}</textarea>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <button type="submit" class="btn btn-success" id="submitReviewButton">Submit Review</button>
+        <a href="{% url 'review_list' %}" class="btn btn-secondary" id="cancelButton">Cancel</a>
+    </form>
+</div>
+
+<script>
+    document.getElementById("createReviewForm").addEventListener("submit", function(event) {
+        let ratingField = document.getElementById("id_rating");
+        if (ratingField.value.trim() === "") {
+            alert("Rating is required");
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock content %}
